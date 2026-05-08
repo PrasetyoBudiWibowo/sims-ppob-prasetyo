@@ -40,12 +40,12 @@ const Home = () => {
     { icon: "/src/assets/Website_Assets/PDAM.png", name: "PDAM" },
     { icon: "/src/assets/Website_Assets/PGN.png", name: "PGN" },
     {
-      icon: "/src/assets/Website_Assets/TV Langganan.png",
+      icon: "/src/assets/Website_Assets/Televisi.png",
       name: "TV Langganan",
     },
     { icon: "/src/assets/Website_Assets/Musik.png", name: "Musik" },
     {
-      icon: "/src/assets/Website_Assets/Voucher Game.png",
+      icon: "/src/assets/Website_Assets/Game.png",
       name: "Voucher Game",
     },
     {
