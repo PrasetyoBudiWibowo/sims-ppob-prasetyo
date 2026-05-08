@@ -51,7 +51,7 @@ Aplikasi web **SIMS PPOB** (Sistem Informasi Manajemen PPOB) built with React.js
 
 ```bash
 # Clone repository
-git clone https://github.com/username-kamu/sims-ppob-prasetyo.git
+git clone https://github.com/PrasetyoBudiWibowo/sims-ppob-prasetyo
 
 # Masuk ke folder
 cd sims-ppob-prasetyo
