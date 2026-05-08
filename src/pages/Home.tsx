@@ -8,6 +8,8 @@ import { logout } from "../features/auth/authSlice";
 import { fetchProfile } from "../features/profile/profileSlice";
 import { formatRupiah } from "../utils/formatter";
 import { fetchBalance } from "../features/balance/balanceSlice";
+import { fetchBanners } from "../features/banner/bannerSlice";
+import { fetchServices } from "../features/service/serviceSlice";
 
 const Home = () => {
   const navigate = useNavigate();
@@ -19,11 +21,19 @@ const Home = () => {
   const { balance, loading: balanceLoading } = useSelector(
     (state: any) => state.balance,
   );
+  const { data: banners, loading: bannerLoading } = useSelector(
+    (state: any) => state.banner,
+  );
+  const { data: services, loading: serviceLoading } = useSelector(
+    (state: any) => state.service,
+  );
 
   useEffect(() => {
     if (isAuthenticated) {
       dispatch(fetchProfile());
       dispatch(fetchBalance());
+      dispatch(fetchBanners());
+      dispatch(fetchServices());
     }
   }, [isAuthenticated, dispatch]);
 
@@ -38,57 +48,6 @@ const Home = () => {
     toast.success("Logout berhasil");
     navigate("/login");
   };
-
-  const services = [
-    {
-      icon: "/src/assets/Website_Assets/PBB.png",
-      name: "PBB",
-    },
-    {
-      icon: "/src/assets/Website_Assets/Listrik.png",
-      name: "Listrik",
-    },
-    {
-      icon: "/src/assets/Website_Assets/Pulsa.png",
-      name: "Pulsa",
-    },
-    {
-      icon: "/src/assets/Website_Assets/PDAM.png",
-      name: "PDAM",
-    },
-    {
-      icon: "/src/assets/Website_Assets/PGN.png",
-      name: "PGN",
-    },
-    {
-      icon: "/src/assets/Website_Assets/Televisi.png",
-      name: "TV\nLangganan",
-    },
-    {
-      icon: "/src/assets/Website_Assets/Musik.png",
-      name: "Musik",
-    },
-    {
-      icon: "/src/assets/Website_Assets/Game.png",
-      name: "Voucher\nGame",
-    },
-    {
-      icon: "/src/assets/Website_Assets/Voucher Makanan.png",
-      name: "Voucher\nMakanan",
-    },
-    {
-      icon: "/src/assets/Website_Assets/Kurban.png",
-      name: "Kurban",
-    },
-    {
-      icon: "/src/assets/Website_Assets/Zakat.png",
-      name: "Zakat",
-    },
-    {
-      icon: "/src/assets/Website_Assets/Paket Data.png",
-      name: "Paket\nData",
-    },
-  ];
 
   return (
     <div className="min-h-screen bg-white">
@@ -190,48 +149,55 @@ const Home = () => {
         </section>
 
         <section className="mt-14">
-          <div className="grid grid-cols-4 sm:grid-cols-6 md:grid-cols-8 lg:grid-cols-12 gap-y-8">
-            {services.map((service, index) => (
-              <div
-                key={index}
-                onClick={() =>
-                  navigate("/payment", {
-                    state: service,
-                  })
-                }
-                className="flex flex-col items-center cursor-pointer hover:scale-105 transition">
-                <div className="w-16 h-16 flex items-center justify-center">
-                  <img
-                    src={service.icon}
-                    alt={service.name}
-                    className="w-14 h-14 object-contain"
-                  />
-                </div>
+          {serviceLoading ? (
+            <p>Loading layanan...</p>
+          ) : (
+            <div className="grid grid-cols-4 sm:grid-cols-6 md:grid-cols-8 lg:grid-cols-12 gap-y-8">
+              {services.map((service: any, index: number) => (
+                <div
+                  key={index}
+                  onClick={() =>
+                    navigate("/payment", {
+                      state: service,
+                    })
+                  }
+                  className="flex flex-col items-center cursor-pointer hover:scale-105 transition">
+                  <div className="w-16 h-16 flex items-center justify-center">
+                    <img
+                      src={service.service_icon}
+                      alt={service.service_name}
+                      className="w-14 h-14 object-contain"
+                    />
+                  </div>
 
-                <p className="text-xs text-center text-gray-700 mt-2 whitespace-pre-line leading-tight">
-                  {service.name}
-                </p>
-              </div>
-            ))}
-          </div>
+                  <p className="text-xs text-center text-gray-700 mt-2 leading-tight px-1">
+                    {service.service_name}
+                  </p>
+                </div>
+              ))}
+            </div>
+          )}
         </section>
 
-        {/* Banner */}
         <section className="mt-16">
           <h3 className="font-semibold text-lg mb-5">Temukan promo menarik</h3>
 
           <div className="flex gap-5 overflow-x-auto scrollbar-hide pb-2">
-            {[1, 2, 3, 4, 5].map((item) => (
-              <div
-                key={item}
-                className="min-w-[270px] rounded-2xl overflow-hidden flex-shrink-0">
-                <img
-                  src={`/src/assets/Website_Assets/Banner ${item}.png`}
-                  alt={`Banner ${item}`}
-                  className="w-full h-full object-cover"
-                />
-              </div>
-            ))}
+            {bannerLoading ? (
+              <p>Loading banner...</p>
+            ) : (
+              banners.map((banner: any, index: number) => (
+                <div
+                  key={index}
+                  className="min-w-[270px] rounded-2xl overflow-hidden flex-shrink-0">
+                  <img
+                    src={banner.banner_image}
+                    alt={banner.banner_name}
+                    className="w-full h-full object-cover"
+                  />
+                </div>
+              ))
+            )}
           </div>
         </section>
       </main>

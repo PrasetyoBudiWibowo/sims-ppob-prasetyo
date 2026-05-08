@@ -1,17 +1,57 @@
 import { useState } from "react";
+import toast from "react-hot-toast";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { Eye, EyeOff } from "lucide-react";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { formatRupiah } from "../utils/formatter";
+import { fetchBalance } from "../features/balance/balanceSlice";
+import { transactionPayment } from "../features/transaction/transactionSlice";
 
 const Payment = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const location = useLocation();
   const service = location.state;
   const profile = useSelector((state: any) => state.profile.data);
   const balance = useSelector((state: any) => state.balance.balance);
+  const transactionLoading = useSelector(
+    (state: any) => state.transaction.loading,
+  );
+
   const [showBalance, setShowBalance] = useState(false);
-  const nominal = 0;
+  if (!service) {
+    navigate("/");
+    return null;
+  }
+
+  const nominal = service.service_tariff;
+
+  const handlePayment = async () => {
+    if (balance < nominal) {
+      toast.error("Saldo tidak mencukupi");
+      return;
+    }
+
+    try {
+      const resultAction = await dispatch(
+        transactionPayment({
+          service_code: service.service_code,
+        }) as any,
+      );
+
+      if (transactionPayment.fulfilled.match(resultAction)) {
+        toast.success("Pembayaran berhasil");
+
+        dispatch(fetchBalance() as any);
+
+        navigate("/");
+      } else {
+        toast.error(resultAction.payload || "Pembayaran gagal");
+      }
+    } catch {
+      toast.error("Terjadi kesalahan");
+    }
+  };
 
   return (
     <div className="min-h-screen bg-white">
@@ -104,11 +144,13 @@ const Payment = () => {
           <p className="text-gray-600 text-xl">Pembayaran</p>
 
           <div className="flex items-center gap-3 mt-4">
-            <img src={service.icon} alt={service.name} className="w-10 h-10" />
+            <img
+              src={service.service_icon}
+              alt={service.service_name}
+              className="w-10 h-10"
+            />
 
-            <h1 className="text-3xl font-bold whitespace-pre-line">
-              {service.name}
-            </h1>
+            <h1 className="text-3xl font-bold">{service.service_name}</h1>
           </div>
 
           <div className="mt-10">
@@ -119,8 +161,11 @@ const Payment = () => {
               className="w-full border border-gray-300 rounded-md px-5 py-4 text-lg outline-none"
             />
 
-            <button className="mt-5 w-full py-4 rounded-md bg-red-500 text-white font-semibold">
-              Bayar
+            <button
+              onClick={handlePayment}
+              disabled={transactionLoading}
+              className="mt-5 w-full py-4 rounded-md bg-red-500 text-white font-semibold disabled:opacity-70">
+              {transactionLoading ? "Memproses..." : "Bayar"}
             </button>
           </div>
         </section>
