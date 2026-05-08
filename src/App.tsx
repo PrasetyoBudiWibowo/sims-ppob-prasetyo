@@ -5,6 +5,7 @@ import Home from "./pages/Home";
 import TopUp from "./pages/TopUp";
 import Transaction from "./pages/Transaction";
 import Profile from "./pages/Profile";
+import Payment from "./pages/Payment";
 import ProtectedRoute from "./components/ProtectedRoute";
 
 function App() {
@@ -46,6 +47,8 @@ function App() {
           </ProtectedRoute>
         }
       />
+
+      <Route path="/payment" element={<Payment />} />
 
       <Route path="*" element={<Navigate to="/login" replace />} />
     </Routes>

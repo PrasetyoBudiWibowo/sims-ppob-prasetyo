@@ -78,21 +78,20 @@ const TopUp = () => {
 
   return (
     <div className="min-h-screen bg-white">
-      {/* Navbar */}
       <header className="border-b border-gray-200">
         <div className="max-w-6xl mx-auto px-6 h-20 flex items-center justify-between">
-          {/* Logo */}
-          <Link to="/" className="flex items-center gap-3">
-            <div className="w-8 h-8 bg-red-500 rounded-full flex items-center justify-center text-white font-bold">
+          <Link to="/" className="flex items-center gap-2">
+            <div className="w-7 h-7 bg-red-500 rounded-full flex items-center justify-center text-white text-sm font-bold">
               S
             </div>
-
-            <h1 className="font-bold text-2xl">SIMS PPOB</h1>
+            <h1 className="font-bold text-lg">SIMS PPOB</h1>
           </Link>
-
-          {/* Menu */}
-          <div className="flex items-center gap-8 text-sm font-medium">
-            <span className="text-red-500 font-semibold">Top Up</span>
+          <div className="flex items-center gap-10 text-sm font-medium">
+            <button
+              onClick={() => navigate("/top-up")}
+              className="text-red-500 font-semibold transition">
+              Top Up
+            </button>
 
             <button
               onClick={() => navigate("/transaction")}
