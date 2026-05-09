@@ -23,8 +23,12 @@ export const fetchProfile = createAsyncThunk(
         return response.data;
       }
       return rejectWithValue(response.message || 'Gagal mengambil profile');
-    } catch (error: any) {
-      return rejectWithValue(error.response?.data?.message || 'Terjadi kesalahan');
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        return rejectWithValue(error.message);
+      }
+
+      return rejectWithValue('Terjadi kesalahan');
     }
   }
 );
