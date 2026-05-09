@@ -5,7 +5,7 @@ import toast from "react-hot-toast";
 import { AxiosError } from "axios";
 
 import { Mail, Lock, Eye, EyeOff } from "lucide-react";
-import loginImage from "../assets/Website_Assets/illustrasi login.png";
+import loginImage from "../assets/Website_Assets/illustrasi-login.png";
 
 import { loginUser } from "../features/auth/authservice";
 import { loginSuccess } from "../features/auth/authSlice";
