@@ -17,3 +17,19 @@ export const getProfile = async (): Promise<ProfileResponse> => {
   const response = await api.get("/profile");
   return response.data;
 };
+
+interface UpdateProfilePayload {
+  first_name: string;
+  last_name: string;
+}
+
+export const updateProfile = async (
+  payload: UpdateProfilePayload,
+) => {
+  const response = await api.put(
+    "/profile/update",
+    payload,
+  );
+
+  return response.data;
+};

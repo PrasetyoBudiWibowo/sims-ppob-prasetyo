@@ -9,7 +9,7 @@ const Navbar = ({ activeMenu }: NavbarProps) => {
   const navigate = useNavigate();
 
   return (
-    <header className="border-b border-gray-200">
+    <header className="sticky top-0 z-50 bg-white border-b border-gray-200">
       <div className="max-w-6xl mx-auto px-6 h-20 flex items-center justify-between">
         <Link to="/" className="flex items-center gap-2">
           <div className="w-7 h-7 bg-red-500 rounded-full flex items-center justify-center text-white text-sm font-bold">
