@@ -2,7 +2,8 @@ import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import MainLayout from "../components/layout/MainLayout";
-import type { AppDispatch } from "../store";
+import type { AppDispatch, RootState } from "../store";
+import type { Service, Banner } from "../types";
 import { fetchProfile } from "../features/profile/profileSlice";
 import { fetchBalance } from "../features/balance/balanceSlice";
 import { fetchBanners } from "../features/banner/bannerSlice";
@@ -11,12 +12,12 @@ import { fetchServices } from "../features/service/serviceSlice";
 const Home = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch<AppDispatch>();
-  const { isAuthenticated } = useSelector((state: any) => state.auth);
+  const { isAuthenticated } = useSelector((state: RootState) => state.auth);
   const { data: banners, loading: bannerLoading } = useSelector(
-    (state: any) => state.banner,
+    (state: RootState) => state.banner,
   );
   const { data: services, loading: serviceLoading } = useSelector(
-    (state: any) => state.service,
+    (state: RootState) => state.service,
   );
 
   useEffect(() => {
@@ -41,7 +42,7 @@ const Home = () => {
           <p className="text-center text-gray-500">Loading layanan...</p>
         ) : (
           <div className="grid grid-cols-4 sm:grid-cols-6 md:grid-cols-8 lg:grid-cols-12 gap-y-8">
-            {services.map((service: any) => (
+            {services.map((service: Service) => (
               <div
                 key={service.service_code}
                 onClick={() =>
@@ -72,7 +73,7 @@ const Home = () => {
           <p className="text-gray-500">Loading banner...</p>
         ) : (
           <div className="flex gap-5 overflow-x-auto scrollbar-hide pb-2">
-            {banners.map((banner: any) => (
+            {banners.map((banner: Banner) => (
               <div
                 key={banner.banner_name}
                 className="min-w-[270px] rounded-2xl overflow-hidden flex-shrink-0">

@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 import MainLayout from "../components/layout/MainLayout";
 import {
@@ -15,6 +16,7 @@ import {
 import { topUpBalance } from "../features/topup/topupService";
 
 const TopUp = () => {
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const [nominal, setNominal] = useState("");
   const [loading, setLoading] = useState(false);
@@ -55,6 +57,7 @@ const TopUp = () => {
         toast.success(`Top up ${formatRupiah(num)} berhasil`);
 
         setNominal("");
+        navigate("/");
       } else {
         dispatch(topUpFailure(result.message));
 

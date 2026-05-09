@@ -33,11 +33,13 @@ const Payment = () => {
 
       toast.success("Pembayaran berhasil");
 
-      navigate("/transaction");
-    } catch (error: any) {
-      toast.error(error || "Pembayaran gagal");
-    } finally {
-      setTransactionLoading(false);
+      navigate("/");
+    } catch (error: unknown) {
+      if (typeof error === "string") {
+        toast.error(error);
+      } else {
+        toast.error("Pembayaran gagal");
+      }
     }
   };
 
