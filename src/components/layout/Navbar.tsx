@@ -8,6 +8,14 @@ interface NavbarProps {
 const Navbar = ({ activeMenu }: NavbarProps) => {
   const navigate = useNavigate();
 
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+
+    navigate("/login");
+
+    window.location.reload();
+  };
+
   return (
     <header className="sticky top-0 z-50 bg-white border-b border-gray-200">
       <div className="max-w-6xl mx-auto px-6 h-20 flex items-center justify-between">
@@ -49,7 +57,9 @@ const Navbar = ({ activeMenu }: NavbarProps) => {
             Akun
           </button>
 
-          <button className="hover:text-red-500 transition">
+          <button
+            onClick={handleLogout}
+            className="hover:text-red-500 transition">
             <LogOut size={18} />
           </button>
         </div>
