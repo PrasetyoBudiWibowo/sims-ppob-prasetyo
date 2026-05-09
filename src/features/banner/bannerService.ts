@@ -1,4 +1,4 @@
-import api from "../../services/api";
+import api from "../../utils/api";
 
 export interface BannerItem {
   banner_name: string;

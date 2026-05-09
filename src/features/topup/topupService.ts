@@ -1,4 +1,4 @@
-import api from "../../services/api";
+import api from "../../utils/api";
 
 export interface TopUpPayload {
   top_up_amount: number;
