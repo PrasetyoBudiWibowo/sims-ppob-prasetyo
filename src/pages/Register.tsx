@@ -6,6 +6,8 @@ import { AxiosError } from "axios";
 import { registerUser } from "../features/auth/authservice";
 import { isValidEmail } from "../utils/validators";
 
+import loginImage from "../assets/Website_Assets/illustrasi-login.png";
+
 const initialFormData = {
   email: "",
   first_name: "",
@@ -225,11 +227,7 @@ const Register = () => {
       </div>
 
       <div className="hidden lg:flex flex-1 bg-[#FFF0F0] items-center justify-center">
-        <img
-          src="/src/assets/Website_Assets/illustrasi login.png"
-          alt="Illustration"
-          className="w-[85%] max-w-lg"
-        />
+        <img src={loginImage} alt="Illustration" className="w-[85%] max-w-lg" />
       </div>
     </div>
   );
